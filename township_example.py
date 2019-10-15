@@ -1,6 +1,11 @@
 import geopandas as gpd
 import folium
 import pandas as pd
+from branca.colormap import linear
+
+
+## https://nbviewer.jupyter.org/github/python-visualization/folium/blob/master/examples/GeoJSON_and_choropleth.ipynb?flush_cache=true
+
 
 gem =  gpd.read_file('maps/townships.geojson')
 
@@ -13,24 +18,25 @@ df['name'] = df['Regionaam']
 df = gem.merge(df, on='name')
 
 
-#m.choropleth(
-        
-folium.Choropleth(df, 
-             data=df, 
-             key_on='feature.properties.name', 
-             columns=['name', 'Gemiddeld inkomen per inwoner'], 
-             fill_color='GnBu',  
-             legend_name='Test',
-             tooltip=folium.GeoJsonTooltip(fields=['name'], labels=False, sticky=False),
-             highlight_function=lambda x: {'weight':3,'fillColor':'grey'}).add_to(m)
+colormap = linear.YlGn_09.scale(
+    df['Gemiddeld inkomen per inwoner'].min(),
+    df['Gemiddeld inkomen per inwoner'].max())
 
 
 
+df_dict = df.set_index('name')['Gemiddeld inkomen per inwoner']
+color_dict = {key: colormap(df_dict[key]) for key in df_dict.keys()}
 
-#label = '{}: {} euro/inwoner'.format(df['name'], round(df['Gemiddeld inkomen per inwoner'], 1))
+folium.GeoJson(
+    df,
+    tooltip=folium.GeoJsonTooltip(fields=['name', 'Gemiddeld inkomen per inwoner']),
+#    style_function=lambda feature: {
+#        'fillColor': color_dict[feature['id']],
+#        'color': 'black',
+#        'weight': 2,
+#        'dashArray': '5, 5'
+#   }  
+).add_to(m)
 
-folium.Popup(label).add_to(m)
+m.save('GeoJSON_and_choropleth.html')
 
-        
-        
-m.save('choropleth.html')

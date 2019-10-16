@@ -6,9 +6,20 @@ from branca.colormap import linear
 
 ## https://nbviewer.jupyter.org/github/python-visualization/folium/blob/master/examples/GeoJSON_and_choropleth.ipynb?flush_cache=true
 
+<<<<<<< HEAD
 prov =  gpd.read_file('maps/provinces.geojson')
 
 m = folium.Map(location=[52.5,6.9], zoom_start=8, tiles='Stamen terrain')
+=======
+
+prov =  gpd.read_file('maps/provinces.geojson')
+
+#gj =  geojson.loads('maps/provinces.geojson')
+
+
+
+m = folium.Map(location=[52.9,6.8], zoom_start=10.5, tiles='Stamen terrain')
+>>>>>>> 19f7626e392f91858d4423012664bee83089b8e7
 
 groningen = pd.read_csv("data/CO2-Uitstoot-Groningen.csv", sep = ';')
 drenthe = pd.read_csv("data/CO2-Uitstoot-Drenthe.csv", sep = ';')
@@ -30,6 +41,13 @@ landbouw = 'CO2-uitstoot Landbouw, bosbouw en visserij, SBI A (gas, elektr., tie
 
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 19f7626e392f91858d4423012664bee83089b8e7
 def selectYearandSector(df, year, sector):
 
     df = df[df['Tegel'] == 'CO2-uitstoot per hoofdsector'] 
@@ -59,11 +77,20 @@ industrie2017 = industrie2017.append(selectYearandSector(limburg, 2017, industri
 industrie2017 = industrie2017.append(selectYearandSector(utrecht, 2017, industrie))
 
 dff = prov.merge(industrie2017, on='name')
+<<<<<<< HEAD
 
 
 dff['CO2 uitstoot'] = 1
 for i in range(12):
     dff['CO2 uitstoot'].iloc[i] = format(dff.Waarde.iloc[i],",") + " ton"
+=======
+dff['CO2 uitstoot'] = 1
+for i in range(12):
+    dff['CO2 uitstoot'].iloc[i] = format(dff.Waarde.iloc[i],",") + " ton"
+#df['name'] = df['Regionaam']
+#df = gem.merge(df, on='name')
+
+>>>>>>> 19f7626e392f91858d4423012664bee83089b8e7
 
 
 colormap = linear.OrRd_09.scale(
@@ -90,8 +117,23 @@ folium.GeoJson(
 #
 #
 #
+<<<<<<< HEAD
 folium.LayerControl().add_to(m)
 #
 m.save('Provincie-CO2-uitstoot-industrie.html')
 
 
+=======
+#folium.LayerControl().add_to(m)
+#
+m.save('Provincie-CO2-uitstoot-industrie.html')
+
+#style_function=lambda feature: {
+#        'fillColor': color_dict[feature['id']],
+#        'color': 'black',
+#        'weight': 2,
+#        'dashArray': '5, 5'
+#   }  
+# -*- coding: utf-8 -*-
+#
+>>>>>>> 19f7626e392f91858d4423012664bee83089b8e7

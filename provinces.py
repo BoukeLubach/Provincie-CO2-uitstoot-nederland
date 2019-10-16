@@ -58,9 +58,9 @@ industrie2017 = industrie2017.append(selectYearandSector(utrecht, 2017, industri
 dff = prov.merge(industrie2017, on='name')
 
 
-dff['CO2 uitstoot'] = 1
+dff['CO2 uitstoot industrie'] = 1
 for i in range(12):
-    dff['CO2 uitstoot'].iloc[i] = format(dff.Waarde.iloc[i],",") + " ton"
+    dff['CO2 uitstoot industrie'].iloc[i] = format(dff.Waarde.iloc[i],",") + " ton"
 
 
 
@@ -73,7 +73,7 @@ color_dict = {key: colormap(industrie2017[key]) for key in industrie2017.keys()}
 #
 folium.GeoJson(
     dff,
-    tooltip=folium.GeoJsonTooltip(fields=['name', 'CO2 uitstoot']),
+    tooltip=folium.GeoJsonTooltip(fields=['name', 'CO2 uitstoot industrie']),
     style_function=lambda feature: {
         'fillColor': color_dict[feature['properties']['name']],
         'color': 'grey',
